@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('recipients', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('send_wa_id')->constrained();
-            $table->foreignUuid('kontaks_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignUuid('kontak_id')->nullable()->constrained()->onDelete('set null');
             $table->timestamps();
         });
     }
