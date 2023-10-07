@@ -178,6 +178,11 @@ class GroupWaController extends Controller
      */
     public function destroy(GroupWa $groupWa)
     {
-        //
+        $groupWa->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Data berhasil dihapus.'
+        ]);
     }
 }

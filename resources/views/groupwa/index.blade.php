@@ -30,7 +30,7 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title"> Data Tenaga Kependidikan</h3>
+              <h3 class="card-title"> Data Group</h3>
               <x-adminlte-button class="btn-sm text-end float-sm-right mr-2" label=" Add Data" theme="primary"
                 icon="fas fa-plus" onclick="location.href='javascript:void(0)'" id="btn-create" />
               {{-- <x-adminlte-button class="btn-sm text-end float-sm-right mr-2" label=" Import" theme="info"
@@ -178,6 +178,38 @@
               //add message to alert
               $('#alert-scope').html(error.responseJSON.scope);
             }
+          }
+        });
+      });
+      $('body').on('click', ".deleteData", function() {
+        let id = $(this).data('id');
+
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            $.ajax({
+              type: "DELETE",
+              url: "/groupWa/" + id,
+              cache: false,
+              data: {
+                _token: '{{ csrf_token() }}',
+              },
+              success: function(response) {
+                table.ajax.reload();
+                Toast.fire({
+                  icon: 'success',
+                  title: 'Success...',
+                  text: `${response.message}`,
+                });
+              },
+            });
           }
         });
       });
