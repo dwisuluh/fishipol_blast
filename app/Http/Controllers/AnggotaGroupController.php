@@ -31,10 +31,12 @@ class AnggotaGroupController extends Controller
         //     ->join('anggota_groups', 'anggota_groups.kontak_id', '=', 'kontaks.id')
         //     ->where('anggota_groups.group_wa_id', $group)->get();
 
+        //query data anggota group
         $data = AnggotaGroup::select('anggota_groups.*', 'kontaks.nama', 'kontaks.no_hp', 'kontaks.jenis')
             ->join('kontaks', 'anggota_groups.kontak_id', '=', 'kontaks.id')
             ->where('anggota_groups.group_wa_id', $group)->get();
 
+        // merubah dari jenis angka menjadi identitas kontak
         $data = $data->map(function ($item) use ($jenisMap) {
             $item->jenis_text = $jenisMap[$item->jenis];
             return $item;
@@ -122,8 +124,10 @@ class AnggotaGroupController extends Controller
     public function destroy(AnggotaGroup $anggotaGroup)
     {
         // $anggota = AnggotaGroup::findOrFail($anggotaGroup)
+        // menghapus nama group
         $anggotaGroup->delete();
 
+        //mengembalikan respon kehalaman awal berupa json
         return response()->json([
             'success' => true,
             'message' => 'Data berhasil dihapus.'
